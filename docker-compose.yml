@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  server:
+    container_name: server
+    build:
+      context: ./server/
+      dockerfile: Dockerfile
+      target: dev
+    tty: true
+    stdin_open: true
+    ports:
+      - 8888:8080
+      - 2345:2345
+    volumes:
+      - ./server/:/app
+  client:
+    container_name: client
+    build:
+      context: ./client/
+      dockerfile: Dockerfile
+      target: dev
+    tty: true
+    stdin_open: true
+    ports:
+      - 3434:3000
+    volumes:
+      - ./client/app:/app
+    command: sh -c "yarn run dev"
